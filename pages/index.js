@@ -4,11 +4,12 @@ import Link from 'next/link'
 import matter from 'gray-matter'
 import Layout from '../components/Layout'
 import Post from '../components/Post'
+import { sortByDate } from './utils'
 
 
 export default function Home({posts}) {
   // console.log(posts)
-  console.log('posts1', posts)
+  // console.log('posts1', posts)
   // console.log(posts.index)
   return (
     <Layout>
@@ -48,11 +49,11 @@ export async function getStaticProps() {
 
   })
 
-  console.log('posts2', posts) // ターミナル出力
+  // console.log('posts2', posts) // ターミナル出力
 
   return {
     props: {
-      posts
+      posts: posts.sort(sortByDate).slice(0, 6),
     },
   }
 }
