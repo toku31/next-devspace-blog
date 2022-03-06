@@ -1,13 +1,14 @@
-import fs from 'fs'
-import path from 'path'
+// import fs from 'fs'
+// import path from 'path'
 import Link from 'next/link'
-import matter from 'gray-matter'
-import Layout from '../components/Layout'
-import Post from '../components/Post'
-import { sortByDate } from './utils'
+// import matter from 'gray-matter'
+import Layout from '@/components/Layout'
+import Post from '@/components/Post'
+import { sortByDate } from '@/utils/index'
+import { getPosts } from '@/lib/posts'
 
 
-export default function Home({posts}) {
+export default function HomePage({posts}) {
   // console.log(posts)
   // console.log('posts1', posts)
   // console.log(posts.index)
@@ -31,29 +32,30 @@ export default function Home({posts}) {
 
 export async function getStaticProps() {
   // console.log(123)
-  const files = fs.readdirSync(path.join('posts'))
+  // const files = fs.readdirSync(path.join('posts'))  // 69 getPosts
   // console.log(files)
-  const posts = files.map((filename) => {
-    const slug = filename.replace('.md', '')
+  // const posts = files.map((filename) => {
+  //   const slug = filename.replace('.md', '')
 
-    const markdownWithMeta = fs.readFileSync(
-      path.join('posts', filename), 'utf-8'
-    )
+  //   const markdownWithMeta = fs.readFileSync(
+  //     path.join('posts', filename), 'utf-8'
+  //   )
 
-    const {data:frontmatter} = matter(markdownWithMeta)
+  //   const {data:frontmatter} = matter(markdownWithMeta)
 
-    return {
-      slug,
-      frontmatter,
-    }
+  //   return {
+  //     slug,
+  //     frontmatter,
+  //   }
 
-  })
+  // })
 
   // console.log('posts2', posts) // ターミナル出力
 
   return {
     props: {
-      posts: posts.sort(sortByDate).slice(0, 6),
+      // posts: posts.sort(sortByDate).slice(0, 6),
+      posts: getPosts().sort(sortByDate).slice(0, 6),
     },
   }
 }
